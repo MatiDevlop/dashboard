@@ -3,6 +3,8 @@ import AlertUI from './components/AlertUI';
 import SelectorUI from './components/SelectorUI';
 import IndicatorUI from './components/IndicatorUI';
 import DataFetcher from './functions/DataFetcher';
+import TableUI from './components/TableUI';
+import ChartUI from './components/ChartUI';
 import { Grid } from '@mui/material';
 import './App.css'
 
@@ -58,10 +60,10 @@ function App() {
           </Grid>
 
          {/* Gráfico */}
-         <Grid sx={{ display: { xs: "none", md: "block"} }}>Elemento: Gráfico</Grid>
+         <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}><ChartUI /></Grid>
 
          {/* Tabla */}
-         <Grid sx={{ display: { xs: "none", md: "block" } }}>Elemento: Tabla</Grid>
+         <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}><TableUI /></Grid>
 
       </Grid>
   );
