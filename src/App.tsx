@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import HeaderUI from './components/HeaderUI';
 import AlertUI from './components/AlertUI';
 import SelectorUI from './components/SelectorUI';
@@ -9,7 +10,12 @@ import { Grid } from '@mui/material';
 import './App.css'
 
 function App() {
-  const dataFetcherOutput = DataFetcher();
+  // Estado para la ciudad seleccionada
+  const [ciudadSeleccionada, setCiudadSeleccionada] = useState('guayaquil'); // Valor por defecto debe coincidir con las opciones
+
+  // Pasa la ciudad seleccionada a DataFetcher
+  const dataFetcherOutput = DataFetcher(ciudadSeleccionada);
+
   return (
     <Grid container spacing={5} justifyContent="center" alignItems="center">
          {/* Encabezado */}
@@ -18,8 +24,13 @@ function App() {
          {/* Alertas */}
          <Grid container justifyContent="right" alignItems="center"><AlertUI description="No se preveen lluvias"/></Grid>
 
-         {/* Selector */}
-         <Grid size={{ xs: 12, md: 3  }}><SelectorUI/></Grid>
+         {/* Selector: pasa el estado y el setter como props */}
+         <Grid size={{ xs: 12, md: 3 }}>
+        <SelectorUI
+          ciudad={ciudadSeleccionada}
+          setCiudad={setCiudadSeleccionada}
+        />
+      </Grid>
 
          {/* Indicadores */}
          <Grid container size={{ xs: 12, md: 9 }} >
@@ -60,10 +71,20 @@ function App() {
           </Grid>
 
          {/* Gráfico */}
-         <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}><ChartUI /></Grid>
+         <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
+            <ChartUI
+                data={dataFetcherOutput.data}
+                ciudad={ciudadSeleccionada}
+            />
+         </Grid>
 
          {/* Tabla */}
-         <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}><TableUI /></Grid>
+         <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
+            <TableUI
+                data={dataFetcherOutput.data}
+                ciudad={ciudadSeleccionada}
+            />
+         </Grid>
 
       </Grid>
   );

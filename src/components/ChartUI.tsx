@@ -1,25 +1,43 @@
+import React from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
 import Typography from '@mui/material/Typography';
 
-const arrValues1 = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-const arrValues2 = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-const arrLabels = ['A','B','C','D','E','F','G'];
+interface ChartUIProps {
+    data: any;
+    ciudad: string;
+}
 
+export default function ChartUI({ data, ciudad }: ChartUIProps) {
+    if (!data) return <p>No hay datos para mostrar.</p>;
 
-export default function ChartUI() {
-   return (
-      <>
-         <Typography variant="h5" component="div">
-            Chart arrLabels vs arrValues1 & arrValues2
-         </Typography>
-         <LineChart
-            height={300}
-            series={[
-               { data: arrValues1, label: 'value1'},
-               { data: arrValues2, label: 'value2'},
-            ]}
-            xAxis={[{ scaleType: 'point', data: arrLabels }]}
-         />
-      </>
-   );
+    // Título personalizado
+    const titulo = `Temperatura horaria en ${ciudad.charAt(0).toUpperCase() + ciudad.slice(1)}`;
+
+    // Datos para el gráfico
+    const labels = data.hourly.time;
+    const valores = data.hourly.temperature_2m;
+    const unidad = data.current_units.temperature_2m || "°C";
+
+    return (
+        <div>
+            <Typography variant="h5" component="div" align="center" gutterBottom>
+                {titulo}
+            </Typography>
+            <LineChart
+                height={300}
+                series={[
+                    { 
+                        data: valores, 
+                        label: `Temperatura (${unidad})`, 
+                        color: "#1976d2" // color azul MUI
+                    },
+                ]}
+                xAxis={[{ 
+                    scaleType: 'point', 
+                    data: labels,
+                    label: "Hora"
+                }]}
+            />
+        </div>
+    );
 }
