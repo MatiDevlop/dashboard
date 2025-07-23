@@ -82,6 +82,8 @@ function App() {
          <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
             <TableUI
                 data={dataFetcherOutput.data}
+                loading={dataFetcherOutput.loading}
+                error={dataFetcherOutput.error}
                 ciudad={ciudadSeleccionada}
             />
          </Grid>
